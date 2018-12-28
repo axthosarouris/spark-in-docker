@@ -15,6 +15,9 @@ COPY conf/sparkConf.conf  conf/sparkConf.conf
 COPY spark/conf/hadoop /spark/conf/hadoop
 COPY spark/conf/log4j.xml /spark/conf/log4j.xml
 COPY spark/conf/spark-env.sh /spark/conf/spark-env.sh
+COPY fileutils.py fileutils.py
+COPY splittuple.py splittuple.py
+COPY run.py run.py
 
 EXPOSE 4040
 EXPOSE 4041
