@@ -11,8 +11,8 @@ DLOG_J_CONFIGURATION = "-Dlog4j.configuration"
 CONF_FLAG = "--conf"
 FILES_FLAG = "--files"
 DRIVER_JAVA_OPTIONS_CONF = "spark-driver-java-options.conf"
-SUBMIT_PROPERTIES = "sparksubmit.conf"
-SPARK_CONF = "spark-conf"
+SUBMIT_PROPERTIES = "sparkConf.conf"
+SPARK_CONF = "conf"
 COMMENT = "#"
 MIN_VALID_LENGTH = 3
 LOG4J_FILE = "log4j.xml"
@@ -37,8 +37,9 @@ def log4j_abs_path():
 
 class Application:
 
-    def __init__(self, mainclass=None):
+    def __init__(self, mainclass=None, jarPath=None):
         self.mainclass = mainclass
+        self.jarPath= jarPath
         self._update_log4j_path()
 
     def _file_lines_(self, file_name):
@@ -74,7 +75,7 @@ class Application:
         self._append_java_executor_options(command, conflines)
         self._append_java_driver_options(command, driver_java_lines)
         self._upload_log4j_file_(command)
-        command.append(self.jarPath())
+        command.append(self.jarPath)
         return command
 
     def _append_submit_properties_(self, command, conflines):
@@ -136,9 +137,6 @@ class Application:
 
 
 
-    def jarPath(self):
-        return os.path.join("build", "libs", "wikidata-parser-fat.jar")
-
     def execute_command(self, command):
         subprocess.call(command)
 
@@ -155,9 +153,9 @@ class Application:
 def help():
     return  \
         """
-        Usage: python run.py <mainClass>
+        Usage: python run.py <jarPath> <mainClass>
                 
-        Spark initial configuration is stored in the file spark-conf/sparksubmit.conf
+        Spark initial configuration is stored in the file conf/sparkConf.conf
         
         """
 
