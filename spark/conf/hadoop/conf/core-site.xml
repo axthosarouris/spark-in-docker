@@ -1,0 +1,29 @@
+<configuration>
+    <property>
+        <name>fs.gs.impl</name>
+        <value>com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem</value>
+        <description>Register GCS Hadoop filesystem</description>
+    </property>
+    <property>
+        <name>fs.gs.auth.service.account.enable</name>
+        <value>false</value>
+        <description>Force OAuth2 flow</description>
+     </property>
+     <property>
+        <name>fs.gs.auth.client.id</name>
+        <value> 181358331396-chavi962cmiab4eojhmoem35jvfu2ejo.apps.googleusercontent.com </value>
+        <description>Client id of Google-managed project associated with the Cloud SDK</description>
+     </property>
+     <property>
+        <name>fs.gs.auth.client.secret</name>
+        <value>7FLOjas5wnXds0F7zmEeO57X</value>
+        <description>Client secret of Google-managed project associated with the Cloud SDK</description>
+     </property>
+     <property>
+        <name>fs.gs.project.id</name>
+        <value>_THIS_VALUE_DOES_NOT_MATTER_</value>
+        <description>This value is required by GCS connector, but not used in the tools provided here.
+  The value provided is actually an invalid project id (starts with `_`).
+      </description>
+   </property>
+</configuration>
