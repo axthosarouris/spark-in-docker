@@ -11,13 +11,12 @@ ENV PATH=$PATH:/spark/bin
 
 RUN mkdir conf
 
-COPY conf/sparkConf.conf  conf/sparkConf.conf
-COPY spark/conf/hadoop /spark/conf/hadoop
-COPY spark/conf/log4j.xml /spark/conf/log4j.xml
-COPY spark/conf/spark-env.sh /spark/conf/spark-env.sh
-COPY fileutils.py fileutils.py
+COPY java_driver_options.py java_driver_options.py
+COPY java_executor_options.py java_executor_options.py
+COPY log4j.py log4j.py
 COPY splittuple.py splittuple.py
 COPY run.py run.py
+
 
 EXPOSE 4040
 EXPOSE 4041

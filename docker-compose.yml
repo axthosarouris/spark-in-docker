@@ -1,0 +1,18 @@
+version: '2.4'
+
+services:
+  spark:
+    build: .
+    stdin_open: true
+    tty: true
+    mem_limit: 8g
+    volumes:
+      - "$LIBS_FOLDER:/libs"
+      - "$INPUT_FOLDER:/input"
+      - "$OUTPUT_FOLDER:/experiments"
+      - "$CONF_FOLDER:/conf"
+
+    environment:
+      - "WIKIDATA_INPUT_PATH=/input/wikidata-20181029-all.json.gz"
+      - "WIKIDATA_OUTPUT_PATH=/experiments"
+    command: ["$EXE_FILE", "$MAIN_CLASS"]
