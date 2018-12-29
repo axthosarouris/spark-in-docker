@@ -1,3 +1,7 @@
+
+def create_conf_tuples(lineList):
+  return list(map(lambda s: SplitTuple(s), lineList))
+
 class SplitTuple:
 
   def __init__(self, input_string):
