@@ -15,7 +15,17 @@ SUBMIT_PROPERTIES = "sparksubmit.conf"
 SPARK_CONF_FOLDER = "conf"
 COMMENT = "#"
 MIN_VALID_LENGTH = 3
-LOG4J_FILE = "log4j.xml"
+
+
+def set_log4j_filename():
+    log4j_file = os.environ["LOG4J_FILENAME"]
+    if log4j_file is not None:
+        return log4j_file
+    else:
+        raise OSError("missing LOG4J_FILENAME env variable")
+
+
+LOG4J_FILE = set_log4j_filename()
 
 
 def file_lines(conf_file_path):
@@ -47,7 +57,6 @@ class Application:
             return conflines
         raise OSError("Error reading file %s" % conf_file_path)
 
-
     def _build_command_(self, mainclass, conflines, driver_java_lines):
         command = []
         command.append("spark-submit")
@@ -65,7 +74,6 @@ class Application:
         command.append(self.jarPath)
         return command
 
-
     def __append_submit_properties__(self, command, conflines):
         lines_without_java_options = list(
             filter(lambda line: SPARK_EXECUTOR_OPTIONS not in line, conflines))
@@ -73,14 +81,12 @@ class Application:
             command.append("%s" % CONF_FLAG)
             command.append(line)
 
-
     def _update_log4j_path(self):
         log4j_path = os.path.join(SPARK_CONF_FOLDER, LOG4J_FILE)
         if exists_log4j_file(log4j_path):
             self.log4j_path = log4j_abs_path(log4j_path)
         else:
             self.log4j_path = None
-
 
     def _upload_log4j_file_(self, command):
         if self.log4j_path is not None:
@@ -98,7 +104,6 @@ class Application:
             print("No file for java driver options found")
             print("Use %s file to include java driver options." % driver_java_options_conf_file)
             return list()
-
 
     def run(self):
         conflines = self._conf_lines_(SUBMIT_PROPERTIES)
